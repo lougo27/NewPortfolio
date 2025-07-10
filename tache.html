@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Taches SVG organiques côte à côte</title>
+  <style>
+    html, body {
+      margin: 0;
+      overflow: hidden;
+      background: rgb(255, 255, 255);
+      height: 100%;
+      width: 100%;
+    }
+    canvas {
+      display: block;
+      background: transparent;
+    }
+    #hidden-svg {
+      position: absolute;
+      width: 0;
+      height: 0;
+      overflow: visible;
+      pointer-events: none;
+      visibility: hidden;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+<svg id="hidden-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+
+<script>
+  const canvas = document.getElementById("canvas");
+  const ctx = canvas.getContext("2d");
+  const hiddenSVG = document.getElementById("hidden-svg");
+
+  let width = canvas.width = window.innerWidth;
+  let height = canvas.height = window.innerHeight;
+
+  const mouse = { x: -9999, y: -9999 };
+  let pointsList = [];
+
+  // Les deux formes + leurs couleurs + viewBox
+  const shapes = [
+    {
+      path: "M1388.95,1750.62c-108.71,127.24-299.99,170.93-580.41,26.12-309.66-159.92-73.31-272.72-429.74-121.37C22.38,1806.72-10.48,1412.63,2.15,1124.21c12.64-288.42,437.32-144.21,121.34-425.5C-192.49,417.42,251.15,288.92,560.81,53.32c309.66-235.59,409.51,402.65,725.49,121.37s731.81,501.17,544.75,585.42-74.57,219.89,214.87,606.83c263.9,352.79-109.96,478.88-656.98,383.68Z",
+      color: "#FF3D00", // rouge-orange
+      viewBox: {x: 0, y: 0, width: 2132.49, height: 1867.35}
+    },
+    {
+      path: "M1944.11,695.19c-70.84-218.01-229.68-361.79-483.58-279.29-21.51,6.99-42.24,15.16-62.16,24.35,2.58-21.79,3.94-44.03,3.94-66.64C1402.32,106.64,1216.49,0,987.26,0s-415.06,106.64-415.06,373.6c0,22.61,1.36,44.85,3.94,66.64-19.92-9.19-40.65-17.36-62.16-24.35-253.9-82.5-412.74,61.28-483.58,279.29-70.84,218.01-26.84,427.7,227.06,510.19,21.51,6.99,43.08,12.56,64.6,16.84-14.89,16.11-29.07,33.3-42.36,51.6-156.92,215.98-69.26,411.48,116.19,546.22,185.45,134.74,398.47,157.69,555.39-58.29,13.29-18.3,25.26-37.09,35.98-56.23,10.72,19.14,22.69,37.94,35.98,56.23,156.92,215.98,369.94,193.03,555.39,58.29,185.45-134.74,273.11-330.24,116.19-546.22-13.29-18.3-27.47-35.49-42.36-51.6,21.52-4.28,43.09-9.85,64.6-16.84,253.9-82.5,297.9-292.18,227.06-510.19Z",
+      color: "#2B61AC",  // bleu très foncé (presque noir)
+      viewBox: {x: 0, y: 0, width: 1974.52, height: 1922.75}
+    }
+  ];
+
+  // Setup points for a shape, with offsetX to place it
+  function setupPointsFromPath(shape, offsetX) {
+    hiddenSVG.innerHTML = '';
+
+    const svgNS = "http://www.w3.org/2000/svg";
+    const path = document.createElementNS(svgNS, "path");
+    path.setAttribute("d", shape.path);
+    hiddenSVG.appendChild(path);
+
+    const bbox = path.getBBox();
+
+    const vb = shape.viewBox;
+
+    // scale pour occuper ~75% de la moitié d'écran
+    const maxWidth = (width / 2) * 0.75;
+    const maxHeight = height * 0.75;
+    const scaleX = maxWidth / vb.width;
+    const scaleY = maxHeight / vb.height;
+    const scale = Math.min(scaleX, scaleY);
+
+    const pathLength = path.getTotalLength();
+    const pointCount = 300;
+
+    let pts = [];
+    for (let i = 0; i < pointCount; i++) {
+      const pt = path.getPointAtLength((i / pointCount) * pathLength);
+      pts.push({
+        x: (pt.x - vb.x) * scale + offsetX,
+        y: (pt.y - vb.y) * scale + height / 2 - (vb.height * scale) / 2,
+        ox: (pt.x - vb.x) * scale + offsetX,
+        oy: (pt.y - vb.y) * scale + height / 2 - (vb.height * scale) / 2,
+        angle: Math.atan2(pt.y - vb.y - vb.height / 2, pt.x - vb.x - vb.width / 2)
+      });
+    }
+    return pts;
+  }
+
+  // On crée points pour chaque forme placée dans sa moitié
+  pointsList = [
+    {points: setupPointsFromPath(shapes[0], width / 4), color: shapes[0].color},
+    {points: setupPointsFromPath(shapes[1], 3 * width / 4), color: shapes[1].color}
+  ];
+
+  function drawSmoothPath(points) {
+    ctx.beginPath();
+    const len = points.length;
+    for(let i=0; i<len; i++) {
+      const p0 = points[(i - 1 + len) % len];
+      const p1 = points[i];
+      const p2 = points[(i + 1) % len];
+      const p3 = points[(i + 2) % len];
+
+      const cp1x = p1.x + (p2.x - p0.x) / 6;
+      const cp1y = p1.y + (p2.y - p0.y) / 6;
+
+      const cp2x = p2.x - (p3.x - p1.x) / 6;
+      const cp2y = p2.y - (p3.y - p1.y) / 6;
+
+      if(i === 0) {
+        ctx.moveTo(p1.x, p1.y);
+      }
+
+      ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p2.x, p2.y);
+    }
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function animate(t) {
+    ctx.clearRect(0, 0, width, height);
+
+    for(const shapeData of pointsList) {
+      const pts = shapeData.points;
+      const color = shapeData.color;
+
+      const baseAmplitude = 15;
+      const amplitudeVariation = 10;
+      const globalAmplitude = baseAmplitude + amplitudeVariation * (Math.sin(t * 0.0003) * 0.5 + Math.cos(t * 0.0004) * 0.5 + 1);
+
+      for (const p of pts) {
+        const wave = Math.sin(t * 0.0004 + p.angle * 5) * globalAmplitude;
+
+        const dx = mouse.x - p.x;
+        const dy = mouse.y - p.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        const maxDist = 100;
+        let influence = 0;
+        if(dist < maxDist) {
+          influence = (1 - dist / maxDist) * 18;
+        }
+
+        const targetX = p.ox + Math.cos(p.angle) * wave + dx * 0.35 * influence;
+        const targetY = p.oy + Math.sin(p.angle) * wave + dy * 0.35 * influence;
+
+        const smoothing = 0.02;
+        p.x += (targetX - p.x) * smoothing;
+        p.y += (targetY - p.y) * smoothing;
+      }
+
+      ctx.shadowBlur = 10;
+      ctx.shadowColor = color + "B3"; // opacité 70%
+      ctx.fillStyle = color;
+      drawSmoothPath(pts);
+
+      ctx.shadowBlur = 0;
+      ctx.shadowColor = "transparent";
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  window.addEventListener("mousemove", e => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+
+  window.addEventListener("mouseleave", () => {
+    mouse.x = -9999;
+    mouse.y = -9999;
+  });
+
+  window.addEventListener("resize", () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+    pointsList = [
+      {points: setupPointsFromPath(shapes[0], width / 4), color: shapes[0].color},
+      {points: setupPointsFromPath(shapes[1], 3 * width / 4), color: shapes[1].color}
+    ];
+  });
+
+  animate(0);
+</script>
+
+</body>
+</html>
