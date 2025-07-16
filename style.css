@@ -17,6 +17,36 @@
   pointer-events: none;
 }
 
+#loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #ccc;
+  border-top-color: #333;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
 
 
 #hidden-svg {
@@ -205,7 +235,7 @@ header {
 
 
 /* ---------- Contenu principal ---------- */
-main {
+#main {
   display: flex;
   flex-direction: row;
 
@@ -522,39 +552,76 @@ h2 {
 /* grille */
 
 .grid2 {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      grid-auto-rows: 210px;
-      gap: 1rem;
-      padding: 5%;
-    }
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-auto-rows: 210px;
+  gap: 1rem;
+  padding: 5%;
+}
 
-    .item {
-      background-color: #ccc;
-      border-radius: 8px;
-    }
+.item {
+  background-color: #fff;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
 
-    /* Spécificités des blocs */
-    .item.wide {
-      grid-column: span 3;
-    }
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 15px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  background: #000000ad;
+  opacity: 0.7;
+  flex-wrap: wrap;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
 
-    .item.tall {
-      grid-row: span 2;
-    }
-    
-    .item.two {
-      grid-column: span 2;
-    }
+.item:hover .overlay {
+  transform: translateY(0);
+}
 
-    .item video,
-    .item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 8px;
-      display: block;
-    }
+.overlay-btn {
+  background: #000;
+  opacity: 1;
+  color: var(--bg-color);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: background 0.3s;
+  cursor: default;
+}
+
+
+/* Spécificités des blocs */
+.item.wide {
+  grid-column: span 3;
+}
+
+.item.tall {
+  grid-row: span 2;
+}
+
+.item.two {
+  grid-column: span 2;
+}
+
+.item video,
+.item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
 
 
 
@@ -563,7 +630,7 @@ h2 {
 #UIUX {
   height: 100%;
   background-color: #F24130;
-  margin-top: 8%;
+  margin-top: 5%;
   /* margin-left: 4%;
   margin-right: 5%;
   padding-left: 20px;
@@ -713,6 +780,21 @@ h2 {
 .footer-btn.couleur4:hover {
   background-color: #F2AE2E;
   border: 1px solid #F2AE2E;
+}
+
+.footer-links {
+  display: flex;
+  gap: 15px;
+}
+
+.footer-links .icon img {
+  width: 30px;
+  height: auto;
+  transition: transform 0.2s ease;
+}
+
+.footer-links .icon img:hover {
+  transform: scale(1.1);
 }
 
 /* Fleur en bas à droite dans le footer */
