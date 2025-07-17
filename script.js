@@ -360,7 +360,7 @@ const mediaItems = [
     type: "image",
     src: "Projets/pochetteCD.png",
     classes: [],
-    buttons: ["Porchette CD"]
+    buttons: ["Pochette CD"]
   },
   {
     type: "image",
