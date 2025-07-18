@@ -1,3 +1,13 @@
+let title = document.title;
+window.addEventListener("blur", () => {
+  document.title = "Contactez-moi ;)";
+});
+
+window.addEventListener("focus", () => {
+  document.title = title;
+});
+
+
 function toggleMenu() {
     document.getElementById("nav").classList.toggle("open");
 }
@@ -263,29 +273,29 @@ const projects = [
   },
   {
     title: "Jeu de la vie - revisité",
-    description: "Un autre projet intéressant.",
+    description: "Un jour, je suis tombée sur une vidéo d’Ego sur YouTube qui présentait ce jeu et racontait son histoire. Ça m’a profondément marquée. Mais je n’ai pas pu m’empêcher de réfléchir à la manière de le programmer… et très vite, j’ai eu envie de créer ma propre version. <br> <br>À mon sens, il manquait une règle de gestion des couleurs, alors je l’ai ajoutée. C’est à partir de là que j’ai commencé à vraiment adorer ce jeu, au point d’y passer des heures ! Je me suis alors fixé un objectif : intégrer toutes les fonctionnalités et repenser le design pour le rendre attractif et accessible à tous.",
     link: "#"
   },
   {
     title: "The Maze Game",
-    description: "Encore un projet cool.",
+    description: "The Maze est le premier défi que je me suis lancé en apprenant JavaScript. En une après-midi, je me suis mise au défi de concevoir un jeu de labyrinthe complet, en passant par la génération aléatoire du labyrinthe, le déplacement du personnage, un minuteur, et une sauvegarde du meilleur temps via le local storage. <br> Mais je ne me suis pas arrêtée là : j’ai ensuite conçu rapidement une interface, puis composé une musique d’ambiance sur Soundtrap dans la dernière demi-heure. <br><br>Par la suite, j’ai simplement remarqué que le labyrinthe posait problème sur les écrans trop grands.",
     linkVideo: "Projets/The_maze_game.mp4",
     link: "#"
   },
   {
     title: "Game Muséeum",
-    description: "Un quatrième projet.",
+    description: "Dans le cadre de mon apprentissage du JavaScript, nous devions créer une carte web avec un objet et générer les éléments grâce aux boucles. On devait aussi intégrer un switch au niveau du mode d'affichage. Comme j’avais déjà commencé à apprendre le JS en autodidacte, j’ai voulu aller plus loin en me lançant un défi : concevoir une borne d’arcade et intégrer cartes directement à l’écran en créant l'effet perspective de l'écran qui va avec !",
     linkVideo: "Projets/GameMuseum.mp4",
   },
   {
     title: "Le cercle des poêtes disparus",
-    description: "Du code et des idées.",
+    description: "En binôme, nous avons conçu cette animation typographique en JavaScript dans le cadre de notre apprentissage. Nous avons choisi un texte qui nous tenait à cœur, puis imaginé une expérience visuelle autour de ses mots et de son message. <br><br> (PS: le projet est en maintenance, il y'a eu un problème avec la version en ligne !)",
     linkVideo: "Projets/V1_AnimationText.mp4",
-    link: "Projets/V1_AnimationText.mp4"
+    link: "#"
   },
   {
     title: "Memmory Game",
-    description: "Dernier projet en date.",
+    description: "En jouant au memory avec ma famille, j’ai été tout de suite intriguée par son fonctionnement. Très vite, une question m’est venue : comment pourrais-je coder un jeu comme celui-ci ? <br> <br>Curieuse d’explorer cette idée, j’ai rassemblé des photos de ma galerie et créé différentes catégories pour donner vie à ma propre version : une galerie photo façon Memory !",
     linkVideo: "Projets/Memory.mp4",
   }
 ];
