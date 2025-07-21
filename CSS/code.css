@@ -11,6 +11,29 @@
 
 }
 
+#dotsTWO .dot.active {
+  background: #BF2E21;
+}
+
+#prevTWO.arrow, #nextTWO.arrow {
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #BF2E21;
+  user-select: none;
+  padding-left: 1%;
+  padding-right: 1%;
+  padding-bottom: 0.5%;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+#prevTWO.arrow:hover, #nextTWO.arrow:hover {
+  background-color: #BF2E21;
+  color: var(--bg-color);
+}
+
 .titleMOBILEcode {
   font-size: 2rem;
   align-items: center;
