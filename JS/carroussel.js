@@ -5,19 +5,19 @@ const projects = [
     title: "Mon univers - Portfolio",
     description: "Mon premier portfolio était surtout expérimental, un peu comme celui-ci d’ailleurs ! Mais il visait à me faire expérimenter les animations CSS et JS, et au final, il me correspondait parfaitement, que ce soit dans le graphisme ou avec le petit côté ludique (cartes à gratter, planète qui tourne…)",
     linkVideo: "Projets/Portfolio.mp4",
-    link: "#"
+    link: "https://lougo27.github.io/Portfolio/"
   },
   {
     title: "Le cercle des poêtes disparus",
     description: "En binôme, nous avons conçu cette animation typographique en JavaScript dans le cadre de notre apprentissage. Nous avons choisi un texte qui nous tenait à cœur, puis imaginé une expérience visuelle autour de ses mots et de son message. <br><br> (PS: le projet est en maintenance, il y'a eu un problème avec la version en ligne !)",
     linkVideo: "Projets/V1_AnimationText.mp4",
-    link: "#"
+    link: "https://lougo27.github.io/TextAnimate/"
   },
   {
-    title: "The Maze Game",
+    title: "The Maze Game - Un défi d'une demie-journée !",
     description: "The Maze est le premier défi que je me suis lancé en apprenant JavaScript. En une après-midi, je me suis mise au défi de concevoir un jeu de labyrinthe complet, en passant par la génération aléatoire du labyrinthe, le déplacement du personnage, un minuteur, et une sauvegarde du meilleur temps via le local storage. <br> Mais je ne me suis pas arrêtée là : j’ai ensuite conçu rapidement une interface, puis composé une musique d’ambiance sur Soundtrap dans la dernière demi-heure. <br><br>Par la suite, j’ai simplement remarqué que le labyrinthe posait problème sur les écrans trop grands.",
     linkVideo: "Projets/The_maze_game.mp4",
-    link: "#"
+    link: "https://lougo27.github.io/TheMaze/"
   },
   {
     title: "Jeu de la vie - revisité",
@@ -27,15 +27,15 @@ const projects = [
   },
   {
     title: "Game Muséeum",
-    description: "Dans le cadre de mon apprentissage du JavaScript, nous devions créer une carte web avec un objet et générer les éléments grâce aux boucles. On devait aussi intégrer un switch au niveau du mode d'affichage. Comme j’avais déjà commencé à apprendre le JS en autodidacte, j’ai voulu aller plus loin en me lançant un défi : concevoir une borne d’arcade et intégrer cartes directement à l’écran en créant l'effet perspective de l'écran qui va avec !",
+    description: "Dans le cadre de notre apprentissage du JavaScript, nous devions créer une carte web avec un objet et générer les éléments grâce aux boucles. On devait aussi intégrer un switch au niveau du mode d'affichage. <br><br> Comme j’avais déjà commencé à apprendre le JS en autodidacte, j’ai voulu aller plus loin en me lançant un défi : concevoir une borne d’arcade et intégrer les cartes directement à l’écran en créant l'effet de perspective de l'écran qui va avec !",
     linkVideo: "Projets/GameMuseum.mp4",
-    link: "#"
+    link: "https://lougo27.github.io/game_museum/"
   },
   {
-    title: "Memmory Game",
+    title: "Memory Game",
     description: "En jouant au memory avec ma famille, j’ai été tout de suite intriguée par son fonctionnement. Très vite, une question m’est venue : comment pourrais-je coder un jeu comme celui-ci ? <br> <br>Curieuse d’explorer cette idée, j’ai rassemblé des photos de ma galerie et créé différentes catégories pour donner vie à ma propre version : une galerie photo façon Memory !",
     linkVideo: "Projets/Memory.mp4",
-    link: "#"
+    link: "https://lougo27.github.io/Memory-Galerie-photo/"
   }
 ];
 
