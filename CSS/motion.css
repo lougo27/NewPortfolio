@@ -1,0 +1,36 @@
+/* --------- CONTENU MOTION ----------- */
+
+#MOTION {
+  height: 100%;
+  background-color: #F2AE2E;
+  /* margin-top: 5%; */
+  /* margin-left: 4%;
+  margin-right: 5%;
+  padding-left: 20px;
+  border-radius: 24px; */
+
+}
+
+iframe {
+  border: none;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+}
+
+.videoMotion {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5%;
+
+
+}
+
+#reel {
+  width: 25%;
+}
