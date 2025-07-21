@@ -186,42 +186,42 @@ function initCarousel(carouselId, dotsId, prevBtnId, nextBtnId, centerIndex = 0,
 
 // J'ai suivi un tuto mais ça ne marche pas j'imagine que c'est à cause des cartes
 // Cette partie ne fonctionne pas et j'ai pas trop compris le truc faudra que j'étudie davantages le truc
-function enableDragScroll(selector) {
-  const container = document.querySelector(selector);
-  if (!container) return;
+// function enableDragScroll(selector) {
+//   const container = document.querySelector(selector);
+//   if (!container) return;
 
-  let isDown = false;
-  let startX;
-  let scrollLeft;
+//   let isDown = false;
+//   let startX;
+//   let scrollLeft;
 
-  container.addEventListener('mousedown', (e) => {
-    isDown = true;
-    container.classList.add('dragging');
-    startX = e.pageX - container.offsetLeft;
-    scrollLeft = container.scrollLeft;
-  });
+//   container.addEventListener('mousedown', (e) => {
+//     isDown = true;
+//     container.classList.add('dragging');
+//     startX = e.pageX - container.offsetLeft;
+//     scrollLeft = container.scrollLeft;
+//   });
 
-  container.addEventListener('mouseleave', () => {
-    isDown = false;
-    container.classList.remove('dragging');
-  });
+//   container.addEventListener('mouseleave', () => {
+//     isDown = false;
+//     container.classList.remove('dragging');
+//   });
 
-  container.addEventListener('mouseup', () => {
-    isDown = false;
-    container.classList.remove('dragging');
-  });
+//   container.addEventListener('mouseup', () => {
+//     isDown = false;
+//     container.classList.remove('dragging');
+//   });
 
-  container.addEventListener('mousemove', (e) => {
-    if (!isDown) return;
-    e.preventDefault();
-    const x = e.pageX - container.offsetLeft;
-    const walk = (x - startX) * 1.5; // facteur de vitesse
-    container.scrollLeft = scrollLeft - walk;
-  });
-}
+//   container.addEventListener('mousemove', (e) => {
+//     if (!isDown) return;
+//     e.preventDefault();
+//     const x = e.pageX - container.offsetLeft;
+//     const walk = (x - startX) * 1.5; // facteur de vitesse
+//     container.scrollLeft = scrollLeft - walk;
+//   });
+// }
 
-enableDragScroll('.carousel');
-enableDragScroll('.carouselTWO');
+// enableDragScroll('.carousel');
+// enableDragScroll('.carouselTWO');
 
 
 initCarousel('carousel', 'dots', 'prev', 'next', 3);

@@ -12,6 +12,14 @@
 
 }
 
+.titleMOBILEgraphisme {
+  font-size: 2rem;
+  align-items: center;
+  padding-top: 3%;
+  color: var(--bg-color);
+  padding-left: 8%;
+}
+
 .carousel-container {
   position: relative;
   width: 100%;
@@ -233,4 +241,87 @@
 
 .info-icon-graphisme:hover .tooltip2 {
   opacity: 1;
+}
+
+
+/* Tablettes (largeur entre 601px et 900px) */
+@media (max-width: 900px) {
+  .grid2 {
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 180px;
+    padding: 4%;
+  }
+}
+
+/* Petits écrans / mobiles (largeur max 600px) */
+@media (max-width: 600px) {
+  .grid2 {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 160px;
+    padding: 3%;
+  }
+
+  /* Si tu préfères 1 colonne sur très petits écrans, décommente : */
+  /*
+  .grid2 {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 150px;
+    padding: 3%;
+  }
+  */
+}
+
+/* Ajustements pour les items qui ont des spans */
+@media (max-width: 900px) {
+  .item.wide {
+    grid-column: span 3; /* Garde 3 colonnes wide sur tablette */
+  }
+  .item.two {
+    grid-column: span 2;
+  }
+  .item.tall {
+    grid-row: span 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .item.wide,
+  .item.two {
+    grid-column: span 2; /* Sur mobile wide ou two occupent 2 colonnes max */
+  }
+  .item.tall {
+    grid-row: span 2;
+  }
+
+  .info-icon-graphisme {
+    display: none;
+  }
+
+  .carousel-container {
+    padding-top: 10%;
+  }
+}
+
+@media (max-width: 600px) {
+  .grid2 {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 160px;
+    padding: 3%;
+    margin-top: 10%;
+    margin-bottom: 10%;
+  }
+
+  .item.end {
+    grid-column: 2 / 3; /* colonne 2 */
+    grid-row: 4 / 5;    /* ligne 4 */
+  }
+}
+
+.sousTitreGraphisme {
+  background-color: var(--bg-color); 
+  padding-top: 5%;
+  margin: 0;
+  text-align: center;
+  color: #F2C12E;
+  font-size: 1.5rem;
 }

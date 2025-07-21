@@ -12,6 +12,14 @@
 
 }
 
+.titleMOBILEux {
+  font-size: 2rem;
+  align-items: center;
+  padding-top: 3%;
+  color: var(--bg-color);
+  padding-left: 8%;
+}
+
 .titleUX {
   font-size: 1.5rem;
   color: #F24130;
@@ -67,3 +75,54 @@
   color: var(--bg-color);
 }
 
+/* Responsive Tablette (601px à 900px) */
+@media (max-width: 900px) {
+  #VideoUX {
+    flex-direction: column; /* Empile les vidéos */
+    gap: 20px;
+    align-items: center;
+  }
+
+  .boxVideo {
+    width: 80%;
+    padding: 4%;
+  }
+
+  .boutonsUX {
+    justify-content: center;
+  }
+
+  #happy {
+    height: auto;
+    max-height: 300px;
+  }
+}
+
+/* Responsive Mobile (max 600px) */
+@media (max-width: 600px) {
+  #VideoUX {
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .boxVideo {
+    width: 90%;
+    padding: 3%;
+  }
+
+  .boutonsUX {
+    justify-content: center;
+  }
+
+  #happy {
+    height: auto;
+    max-height: 250px;
+  }
+
+  .voirProjectUX {
+    padding: 6px 16px;
+    font-size: 0.9rem;
+    margin-top: 5%;
+  }
+}

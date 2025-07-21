@@ -11,6 +11,15 @@
 
 }
 
+.titleMOBILE3d {
+  font-size: 2rem;
+  align-items: center;
+  padding-top: 3%;
+  color: var(--bg-color);
+  padding-left: 8%;
+  margin-top: 10%;
+}
+
 .troisD {
   width: 100%;
   height: auto;
@@ -46,4 +55,53 @@
   color: #BF2E21;
   margin-bottom: 3%;
   height: 20%;
+}
+
+/* Tablette (max 900px) */
+@media (max-width: 900px) {
+  .troisD {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    padding: 4%;
+  }
+
+  .tailleVideo {
+    width: 90%;
+  }
+
+  .text3D {
+    width: 90%;
+    height: auto;
+    gap: 16px;
+  }
+
+  #video3D {
+    height: auto;
+  }
+}
+
+/* Mobile (max 600px) */
+@media (max-width: 600px) {
+  .troisD {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 3%;
+  }
+
+  .tailleVideo {
+    width: 100%;
+  }
+
+  .text3D {
+    width: 100%;
+    height: auto;
+    gap: 14px;
+    margin-bottom: 10%;
+  }
+
+  #video3D {
+    height: auto;
+  }
 }

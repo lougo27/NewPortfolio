@@ -57,7 +57,7 @@ const mediaItems = [
   {
     type: "image",
     src: "Projets/LogoRond.png",
-    classes: [],
+    classes: ["end"],
     buttons: ["Logo", "Identité Visuelle"]
   }
 ];

@@ -11,6 +11,15 @@
 
 }
 
+.titleMOBILEmotion {
+  font-size: 2rem;
+  align-items: center;
+  padding-top: 3%;
+  color: var(--bg-color);
+  padding-left: 8%;
+  margin-top: 10%;
+}
+
 iframe {
   border: none;
   border-radius: 8px;
@@ -33,4 +42,42 @@ iframe {
 
 #reel {
   width: 25%;
+}
+
+/* Responsive Tablette (601px à 900px) */
+@media (max-width: 900px) {
+  .videoMotion {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 4%;
+  }
+
+  #reel {
+    width: 60%;
+  }
+
+  iframe {
+    width: 100%;
+    height: auto;
+  }
+}
+
+/* Responsive Mobile (max 600px) */
+@media (max-width: 600px) {
+  .videoMotion {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 3%;
+  }
+
+  #reel {
+    width: 80%;
+  }
+
+  iframe {
+    width: 100%;
+    height: auto;
+  }
 }
