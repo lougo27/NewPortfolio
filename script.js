@@ -18,31 +18,60 @@ burger.addEventListener("click", () => {
     menu.classList.toggle("open");
 });
 
-// function initVideoObserver() {
-//   if (observer2) {
-//     observer2.disconnect();
-//   }
+document.addEventListener("DOMContentLoaded", () => {
+  const elements = document.querySelectorAll('.messagedefilant');
 
-//   observer2 = new IntersectionObserver((entries) => {
-//     entries.forEach(entry => {
-//       const container = entry.target.closest('#content');
-//       const style = container ? window.getComputedStyle(container) : null;
-//       const isVisible = style ? (style.display !== 'none' && style.visibility !== 'hidden' && parseFloat(style.opacity) > 0) : true;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const container = entry.target;
+        const text = container.querySelector('.title');
 
-//       console.log('Vidéo:', entry.target, 'isIntersecting:', entry.isIntersecting, 'isVisible:', isVisible);
+        // Empêche de relancer l'animation
+        if (text.classList.contains('anim-started')) return;
 
-//       if (entry.isIntersecting && isVisible) {
-//         entry.target.play().catch(e => console.log('Play error:', e));
-//       } else {
-//         entry.target.pause();
-//       }
-//     });
-//   }, {
-//     threshold: 0.3
-//   });
+        text.classList.add('anim-started');
 
-//   document.querySelectorAll('video').forEach(video => observer2.observe(video));
-// }
+        const containerWidth = container.offsetWidth;
+        const textWidth = text.scrollWidth;
+
+        const distance = textWidth + containerWidth;
+        const speed = 150; // pixels/sec
+        const duration = distance / speed;
+
+        // Positionne le texte hors écran à droite
+        text.style.transform = `translateX(${containerWidth}px)`;
+
+        // Force reflow pour garantir l'application du style avant l'animation
+        void text.offsetWidth;
+
+        // Lancement de l'animation
+        const animation = text.animate(
+          [
+            { transform: `translateX(${containerWidth}px)` },
+            { transform: `translateX(-${textWidth}px)` }
+          ],
+          {
+            duration: duration * 1000,
+            iterations: Infinity,
+            easing: "linear"
+          }
+        );
+
+        // Rend visible seulement après l'initialisation
+        container.style.visibility = 'visible';
+      }
+    });
+  }, {
+    threshold: 0.6 // déclenche quand au moins 60% est visible
+  });
+
+  elements.forEach(el => {
+    el.style.visibility = 'hidden'; // par défaut caché
+    observer.observe(el);
+  });
+});
+
 
 document.addEventListener("DOMContentLoaded", () => {
   const lightbox = document.getElementById("lightbox");
@@ -73,7 +102,7 @@ window.addEventListener('load', () => {
   document.getElementById("content").style.display = "block";
 
   // initialisation de l'observer sur les vidéos déjà présentes
-  initVideoObserver();
+  //initVideoObserver();
 });
 
 // fonction pour créer une vidéo et l'ajouter + observer
@@ -270,10 +299,12 @@ const projects = [
     title: "Mon univers - Portfolio",
     description: "Mon premier portfolio était surtout expérimental, un peu comme celui-ci d’ailleurs ! Mais il visait à me faire expérimenter les animations CSS et JS, et au final, il me correspondait parfaitement, que ce soit dans le graphisme ou avec le petit côté ludique (cartes à gratter, planète qui tourne…)",
     linkVideo: "Projets/Portfolio.mp4",
+    link: "#"
   },
   {
-    title: "Jeu de la vie - revisité",
-    description: "Un jour, je suis tombée sur une vidéo d’Ego sur YouTube qui présentait ce jeu et racontait son histoire. Ça m’a profondément marquée. Mais je n’ai pas pu m’empêcher de réfléchir à la manière de le programmer… et très vite, j’ai eu envie de créer ma propre version. <br> <br>À mon sens, il manquait une règle de gestion des couleurs, alors je l’ai ajoutée. C’est à partir de là que j’ai commencé à vraiment adorer ce jeu, au point d’y passer des heures ! Je me suis alors fixé un objectif : intégrer toutes les fonctionnalités et repenser le design pour le rendre attractif et accessible à tous.",
+    title: "Le cercle des poêtes disparus",
+    description: "En binôme, nous avons conçu cette animation typographique en JavaScript dans le cadre de notre apprentissage. Nous avons choisi un texte qui nous tenait à cœur, puis imaginé une expérience visuelle autour de ses mots et de son message. <br><br> (PS: le projet est en maintenance, il y'a eu un problème avec la version en ligne !)",
+    linkVideo: "Projets/V1_AnimationText.mp4",
     link: "#"
   },
   {
@@ -283,127 +314,216 @@ const projects = [
     link: "#"
   },
   {
+    title: "Jeu de la vie - revisité",
+    description: "Un jour, je suis tombée sur une vidéo d’Ego sur YouTube qui présentait ce jeu et racontait son histoire. Ça m’a profondément marquée. Mais je n’ai pas pu m’empêcher de réfléchir à la manière de le programmer… et très vite, j’ai eu envie de créer ma propre version. <br> <br>À mon sens, il manquait une règle de gestion des couleurs, alors je l’ai ajoutée. C’est à partir de là que j’ai commencé à vraiment adorer ce jeu, au point d’y passer des heures ! Je me suis alors fixé un objectif : intégrer toutes les fonctionnalités et repenser le design pour le rendre attractif et accessible à tous.",
+    linkVideo: "images/erreur.png",
+    link: "#"
+  },
+  {
     title: "Game Muséeum",
     description: "Dans le cadre de mon apprentissage du JavaScript, nous devions créer une carte web avec un objet et générer les éléments grâce aux boucles. On devait aussi intégrer un switch au niveau du mode d'affichage. Comme j’avais déjà commencé à apprendre le JS en autodidacte, j’ai voulu aller plus loin en me lançant un défi : concevoir une borne d’arcade et intégrer cartes directement à l’écran en créant l'effet perspective de l'écran qui va avec !",
     linkVideo: "Projets/GameMuseum.mp4",
-  },
-  {
-    title: "Le cercle des poêtes disparus",
-    description: "En binôme, nous avons conçu cette animation typographique en JavaScript dans le cadre de notre apprentissage. Nous avons choisi un texte qui nous tenait à cœur, puis imaginé une expérience visuelle autour de ses mots et de son message. <br><br> (PS: le projet est en maintenance, il y'a eu un problème avec la version en ligne !)",
-    linkVideo: "Projets/V1_AnimationText.mp4",
     link: "#"
   },
   {
     title: "Memmory Game",
     description: "En jouant au memory avec ma famille, j’ai été tout de suite intriguée par son fonctionnement. Très vite, une question m’est venue : comment pourrais-je coder un jeu comme celui-ci ? <br> <br>Curieuse d’explorer cette idée, j’ai rassemblé des photos de ma galerie et créé différentes catégories pour donner vie à ma propre version : une galerie photo façon Memory !",
     linkVideo: "Projets/Memory.mp4",
+    link: "#"
   }
 ];
 
-const grid = document.getElementById("projectGrid");
+// const grid = document.getElementById("projectGrid");
 
-// Fonctions rotation aléatoire
-const rotations = ["rotate(-4deg)", "rotate(3deg)", "rotate(-6deg)"];
+// // Fonctions rotation aléatoire
+// const rotations = ["rotate(-4deg)", "rotate(3deg)", "rotate(-6deg)"];
+
+// projects.forEach(project => {
+//   const block = document.createElement("div");
+//   block.classList.add("block");
+
+//   const card = document.createElement("div");
+//   card.classList.add("card");
+//   card.style.transform = rotations[Math.floor(Math.random() * rotations.length)];
+
+//   if (project.linkVideo) {
+//     const video = document.createElement("video");
+//     video.src = project.linkVideo;
+//     video.controls = true;
+//     video.autoplay = true;
+//     video.loop = true;
+//     video.muted = true;
+//     video.playsInline = true;
+//     video.preload = "none";
+//     video.classList.add("videoCode");
+//     video.style.width = "100%";
+//     video.style.aspectRatio = "5 / 3";
+//     card.appendChild(video);
+
+//     video.pause(); // forcer la pause
+// }
+
+//   const text = document.createElement("div");
+//   text.classList.add("text");
+//   text.innerHTML = `
+//     <strong>${project.title}</strong><br>${project.description}<br>
+//     <a href="${project.link}" target="_blank">
+//       <button class="voirProject">Voir le projet</button>
+//     </a>
+//   `;
+  
+
+//   block.appendChild(card);
+//   block.appendChild(text);
+//   grid.appendChild(block);
+// });
+
+
+
+
+const carousel2 = document.getElementById("carouselTWO");
 
 projects.forEach(project => {
-  const block = document.createElement("div");
-  block.classList.add("block");
-
   const card = document.createElement("div");
-  card.classList.add("card");
-  card.style.transform = rotations[Math.floor(Math.random() * rotations.length)];
+  card.classList.add("carousel-item2", "project-card");
 
   if (project.linkVideo) {
     const video = document.createElement("video");
     video.src = project.linkVideo;
-    video.controls = true;
-    video.autoplay = true;
-    video.loop = true;
     video.muted = true;
+    video.controls = true;
+    video.loop = true;
+    video.autoplay = true;
     video.playsInline = true;
-    video.preload = "none";
-    video.classList.add("videoCode");
-    video.style.width = "100%";
-    video.style.aspectRatio = "5 / 3";
+    video.classList.add("project-video");
     card.appendChild(video);
+  }
 
-    video.pause(); // forcer la pause
-}
-
-  const text = document.createElement("div");
-  text.classList.add("text");
-  text.innerHTML = `
-    <strong>${project.title}</strong><br>${project.description}<br>
-    <a href="${project.link}" target="_blank">
-      <button class="voirProject">Voir le projet</button>
-    </a>
+  const content = document.createElement("div");
+  content.classList.add("project-content");
+  content.innerHTML = `
+    <h2 class="project-title">${project.title.split(" - ")[0].toUpperCase()}</h2>
+    <h3 class="project-subtitle">${project.title.split(" - ")[1] || ""}</h3>
+    <hr class="divider" />
+    <p class="project-description">${project.description}</p>
+    ${project.link ? `<a href="${project.link}" target="_blank"><button class="voirProject">Voir le projet</button></a>` : ""}
   `;
-  
 
-  block.appendChild(card);
-  block.appendChild(text);
-  grid.appendChild(block);
+  card.appendChild(content);
+  carousel2.appendChild(card);
+
+  
 });
 
-// Animation au scroll avec IntersectionObserver
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("visible");
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.2 });
 
-document.querySelectorAll('.block').forEach(el => observer.observe(el));
+// Pour le carrousel CODE
+initCarousel('carouselTWO', 'dotsTWO', 'prevTWO', 'nextTWO', 3, 'carousel-item2');
 
-// Graphisme
 
-const carousel = document.getElementById('carousel');
-const dotsContainer = document.getElementById('dots');
-let items = Array.from(carousel.children);
-let currentIndex = 3; // item central au départ
+console.log("ENFANTS DANS carouselTWO :", document.getElementById("carouselTWO").children.length);
 
-function updateCarousel() {
-  items.forEach((item, index) => {
-    item.classList.toggle('center', index === currentIndex);
-  });
 
-  // Calcul du décalage pour centrer l'item courant
-  const itemWidth = items[0].offsetWidth + 20; // largeur + margin*2 (10px de chaque côté)
-  const offset = (currentIndex - 2) * itemWidth;
-  carousel.style.transform = `translateX(${-offset}px)`;
+function initCarousel(carouselId, dotsId, prevBtnId, nextBtnId, centerIndex = 0, itemClass = 'carousel-item') {
+  const carousel = document.getElementById(carouselId);
+  const dotsContainer = document.getElementById(dotsId);
+  let currentIndex = centerIndex;
 
-  updateDots();
-}
-
-function updateDots() {
-  dotsContainer.innerHTML = '';
-  for (let i = 0; i < items.length; i++) {
-    const dot = document.createElement('span');
-    dot.className = 'dot' + (i === currentIndex ? ' active' : '');
-    dot.addEventListener('click', () => {
-      currentIndex = i;
-      updateCarousel();
-    });
-    dotsContainer.appendChild(dot);
+  function getItems() {
+    return Array.from(carousel.getElementsByClassName(itemClass));
   }
-}
 
-function next() {
-  currentIndex = (currentIndex + 1) % items.length;
+  function updateCarousel() {
+    const items = getItems();
+    if (!items.length) return;
+
+    items.forEach((item, index) => {
+      item.classList.toggle('center', index === currentIndex);
+    });
+
+    const selectedItem = items[currentIndex];
+    const container = carousel.parentElement;
+    const containerWidth = container.offsetWidth;
+    const itemCenter = selectedItem.offsetLeft + selectedItem.offsetWidth / 2;
+    const offset = itemCenter - containerWidth / 2;
+
+    carousel.style.transform = `translateX(${-offset}px)`;
+
+    updateDots(items);
+  }
+
+  function updateDots(items) {
+    dotsContainer.innerHTML = '';
+    for (let i = 0; i < items.length; i++) {
+      const dot = document.createElement('span');
+      dot.className = 'dot' + (i === currentIndex ? ' active' : '');
+      dot.addEventListener('click', () => {
+        currentIndex = i;
+        updateCarousel();
+      });
+      dotsContainer.appendChild(dot);
+    }
+  }
+
+  function next() {
+    const items = getItems();
+    currentIndex = (currentIndex + 1) % items.length;
+    updateCarousel();
+  }
+
+  function prev() {
+    const items = getItems();
+    currentIndex = (currentIndex - 1 + items.length) % items.length;
+    updateCarousel();
+  }
+
+  document.getElementById(nextBtnId).addEventListener('click', next);
+  document.getElementById(prevBtnId).addEventListener('click', prev);
+
   updateCarousel();
 }
 
-function prev() {
-  currentIndex = (currentIndex - 1 + items.length) % items.length;
-  updateCarousel();
+// J'ai suivi un tuto mais ça ne marche pas j'imagine que c'est à cause des cartes
+function enableDragScroll(selector) {
+  const container = document.querySelector(selector);
+  if (!container) return;
+
+  let isDown = false;
+  let startX;
+  let scrollLeft;
+
+  container.addEventListener('mousedown', (e) => {
+    isDown = true;
+    container.classList.add('dragging');
+    startX = e.pageX - container.offsetLeft;
+    scrollLeft = container.scrollLeft;
+  });
+
+  container.addEventListener('mouseleave', () => {
+    isDown = false;
+    container.classList.remove('dragging');
+  });
+
+  container.addEventListener('mouseup', () => {
+    isDown = false;
+    container.classList.remove('dragging');
+  });
+
+  container.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - container.offsetLeft;
+    const walk = (x - startX) * 1.5; // facteur de vitesse
+    container.scrollLeft = scrollLeft - walk;
+  });
 }
 
-document.getElementById('next').addEventListener('click', next);
-document.getElementById('prev').addEventListener('click', prev);
+// Appelle cette fonction pour chaque carrousel
+enableDragScroll('.carousel');
+enableDragScroll('.carouselTWO');
 
-updateCarousel();
+// Pour le carrousel GRAPHISME
+initCarousel('carousel', 'dots', 'prev', 'next', 3);
+
 
 // GRILLE GRAPHISME 
 const mediaItems = [

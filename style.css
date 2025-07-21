@@ -16,7 +16,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #991a1a1a;
+    background-color: #2a220e49;
     justify-content: center;
     align-items: center;
     z-index: 1000;
@@ -34,7 +34,7 @@
     top: 20px;
     right: 30px;
     font-size: 40px;
-    color:  #CA6702;
+    color:  #000;
     cursor: pointer;
 }
 
@@ -345,8 +345,8 @@ h2 {
   position: absolute;
   top: 88vh;
   left: 90vw;
-  width: 4%;
-  height: 4%;
+  width: 4rem;
+  height: 4rem;
   z-index: 10;
   cursor: pointer;
 }
@@ -394,7 +394,7 @@ h2 {
     color: var(--bg-color);
 }
 
-.messagedefilant {
+/* .messagedefilant {
     display: flex;
     justify-content: center;
     white-space: nowrap; 
@@ -416,9 +416,39 @@ h2 {
     100% {
       transform: translateX(-180%); 
     }
+} */
+
+.messagedefilant {
+  display: flex;
+  justify-content: flex-start;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+  visibility: hidden;
 }
 
-.grid {
+.messagedefilant .title {
+  display: inline-block;
+  will-change: transform;
+}
+
+.carousel,
+.carouselTWO {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  cursor: grab;
+  -webkit-overflow-scrolling: touch; /* Pour iOS */
+}
+
+.carousel:active,
+.carouselTWO:active {
+  cursor: grabbing;
+}
+
+
+/* .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(28%, 1fr));
   gap: 6%;
@@ -446,7 +476,128 @@ h2 {
   aspect-ratio: 5 / 3;
   background-color: var(--bg-color);
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+} */
+
+#carousel .dot {
+  width: 10px;
+  height: 10px;
+  background: #ddd;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+  transition: background 0.3s;
 }
+
+#carousel .dots {
+  display: inline-flex;
+  gap: 8px;
+  user-select: none;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background: #ddd;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.dots {
+  display: inline-flex;
+  gap: 8px;
+  user-select: none;
+}
+
+
+.carousel-item2 {
+  width: 30%;
+  margin: 3%;
+  margin-top: 5%;
+  border-radius: 16px;
+  overflow: hidden;
+  /* background: red; */
+  transition: transform 0.3s, filter 0.3s;
+  flex-shrink: 0;
+  cursor: pointer;
+  align-items: flex-start;
+}
+
+/* .carousel-item2.center {
+  transform: scale(1.3);
+  z-index: 2;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+} */
+
+.carouselTWO {
+  width: 100%;
+  /* gap: 5%; */
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  /* justify-content: center; */
+  align-items: center;
+  overflow: visible;
+  flex-direction: row;
+}
+
+.project-card {
+  scroll-snap-align: center;
+  flex: 0 0 auto;
+  
+}
+
+.project-video{
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.project-content {
+  margin-top: 5%;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.project-title {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  margin: 0;
+  color: #BF2E21;
+}
+
+.project-subtitle {
+  font-weight: 300;
+  font-size: 1.2rem;
+  margin-top: 0.2rem;
+  color: #BF2E21;
+}
+
+.divider {
+  border: none;
+  height: 1px;
+  background-color: #BF2E21;
+  margin: 0.8rem 0;
+  width: 40px;
+}
+
+.project-description {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+
+
+.voirProject:hover {
+  background: var(--bg-color);
+  color: #BF2E21;
+}
+
+
 
 /* Texte */
 .text {
@@ -465,14 +616,12 @@ h2 {
   cursor: pointer;
   padding: 8px 20px;
   border: 1px solid ;
-  color: #EF476F;
+  color: #BF2E21;
   margin-top: 3%;
+  align-items: baseline;
 }
 
-.text button:hover {
-  background-color: #EF476F;
-  color: var(--bg-color);
-}
+
 
 .videoCode {
   width: 50%;
@@ -484,7 +633,8 @@ h2 {
 #Graphisme {
   height: 100%;
   background-color: #F2C12E;
-  margin-top: 8%;
+  position: relative;
+  /* margin-top: 8%; */
   /* margin-left: 4%;
   margin-right: 5%;
   padding-left: 20px;
@@ -493,14 +643,16 @@ h2 {
 }
 
 .carousel-container {
+  position: relative;
   width: 100%;
   max-width: 100%;
   position: relative;
   overflow-x: hidden;
   overflow-y: visible;
   background: var(--bg-color);
-  padding: 5%;
-  padding-top: 8%;
+  /* padding: 5%;
+  padding-top: 8%; */
+  max-height: unset;
 }
 
 .carousel {
@@ -509,6 +661,8 @@ h2 {
   /* justify-content: center; */
   align-items: center;
   overflow: visible;
+  padding: 5%;
+  padding-top: 8%;
 }
 
 .carousel-item {
@@ -538,7 +692,8 @@ h2 {
 
 .controls {
   text-align: center;
-  margin-top: 5%;
+  margin-top: 2%;
+  margin-bottom: 5%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -564,13 +719,14 @@ h2 {
   color: var(--bg-color);
 }
 
-.dots {
+
+#carousel .dots {
   display: inline-flex;
   gap: 8px;
   user-select: none;
 }
 
-.dot {
+#carousel .dot {
   width: 10px;
   height: 10px;
   background: #ddd;
@@ -579,6 +735,8 @@ h2 {
   cursor: pointer;
   transition: background 0.3s;
 }
+
+
 
 .dot.active {
   background: #F2C12E;
@@ -658,6 +816,55 @@ h2 {
   display: block;
 }
 
+.info-icon-graphisme {
+  position: absolute;
+  bottom: 5%; /* 10px depuis le bas du carousel */
+  left: 5%;  /* 10px depuis le bord droit */
+  width: 4rem;
+  height: 4rem;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.info-icon-graphisme img {
+  width: 100%;
+  height: auto;
+}
+
+.tooltip2 {
+  /* Positionnement existant conservé */
+  position: absolute;
+  top: 50%;
+  left: 150%;
+  transform: translateY(-50%);
+
+  /* Nouveau pour centrer le texte verticalement */
+  display: flex;
+  align-items: center;
+
+  /* Styles visuels */
+  background-color: rgba(0, 0, 0, 0.75);
+  color: var(--bg-color, #fff);
+  padding: 20%;
+  border-radius: 8px;
+  white-space: wrap;
+  font-size: 0.85rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 100;
+}
+
+
+
+.tooltip2 {
+  width: 600%;
+}
+
+.info-icon-graphisme:hover .tooltip2 {
+  opacity: 1;
+}
+
 
 
 /* -------- CONTENU UIUX -------- */
@@ -665,7 +872,8 @@ h2 {
 #UIUX {
   height: 100%;
   background-color: #F24130;
-  margin-top: 5%;
+  position: relative;
+  /* margin-top: 5%; */
   /* margin-left: 4%;
   margin-right: 5%;
   padding-left: 20px;
@@ -735,7 +943,7 @@ h2 {
 #MOTION {
   height: 100%;
   background-color: #F2AE2E;
-  margin-top: 5%;
+  /* margin-top: 5%; */
   /* margin-left: 4%;
   margin-right: 5%;
   padding-left: 20px;
@@ -772,7 +980,7 @@ iframe {
 #troisD {
   height: 100%;
   background-color: #BF2E21;
-  margin-top: 5%;
+  /* margin-top: 5%; */
   /* margin-left: 4%;
   margin-right: 5%;
   padding-left: 20px;
