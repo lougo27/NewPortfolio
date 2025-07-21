@@ -98,36 +98,67 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    const imagesToLoad = [
-      '/img/hero.jpg',
-      '/img/logo.png'
-    ];
+  const imagesToLoad = [
+    'images/pingo_black.webp',
+    'images/Photo_portfolio.png'
+  ];
 
-    const imagePromises = imagesToLoad.map(src => {
-      return new Promise(resolve => {
-        const img = new Image();
-        img.onload = resolve;
-        img.onerror = resolve; // continue même si une image échoue
-        img.src = src;
-      });
-    });
-
-    Promise.all([
-      ...imagePromises,
-      document.fonts ? document.fonts.ready : Promise.resolve()
-    ]).then(() => {
-      // Tout est prêt : cacher le loader, montrer le contenu
-      const loader = document.getElementById("loader");
-      const content = document.getElementById("content");
-
-      loader.style.opacity = 0;
-      setTimeout(() => {
-        loader.style.display = "none";
-        content.style.display = "block";
-        content.style.opacity = 1;
-      }, 300); // attends que la transition se fasse
+  const imagePromises = imagesToLoad.map(src => {
+    return new Promise(resolve => {
+      const img = new Image();
+      img.onload = resolve;
+      img.onerror = resolve;
+      img.src = src;
     });
   });
+
+  const videoElements = document.querySelectorAll('.project-video');
+
+  const videoPromises = Array.from(videoElements).map(video => {
+    return new Promise(resolve => {
+      // Vérifie si la vidéo a un src valide (directement ou via <source>)
+      const hasSource = video.src || video.querySelector('source')?.src;
+      if (!hasSource) return resolve(); // rien à charger, on résout immédiatement
+
+      let resolved = false;
+
+      const safeResolve = () => {
+        if (resolved) return;
+        resolved = true;
+        video.removeEventListener('canplaythrough', safeResolve);
+        video.removeEventListener('error', safeResolve);
+        resolve();
+      };
+
+      video.addEventListener('canplaythrough', safeResolve);
+      video.addEventListener('error', safeResolve);
+      video.load();
+
+      // Sécurité : timeout au bout de 5s
+      setTimeout(safeResolve, 5000);
+    });
+  });
+
+  Promise.all([
+    ...imagePromises,
+    ...videoPromises,
+    document.fonts ? document.fonts.ready : Promise.resolve()
+  ]).then(() => {
+    const loader = document.getElementById("loader");
+    const content = document.getElementById("content");
+
+    loader.style.opacity = 0;
+
+    setTimeout(() => {
+      loader.style.display = "none";
+      content.style.display = "block";
+      content.style.opacity = 1;
+    }, 300);
+  });
+});
+
+
+
 
 
 // fonction pour créer une vidéo et l'ajouter + observer
