@@ -98,12 +98,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById("loader").style.display = "none";
-  document.getElementById("content").style.display = "block";
+    const imagesToLoad = [
+      '/img/hero.jpg',
+      '/img/logo.png'
+    ];
 
-  // initialisation de l'observer sur les vidéos déjà présentes
-  //initVideoObserver();
-});
+    const imagePromises = imagesToLoad.map(src => {
+      return new Promise(resolve => {
+        const img = new Image();
+        img.onload = resolve;
+        img.onerror = resolve; // continue même si une image échoue
+        img.src = src;
+      });
+    });
+
+    Promise.all([
+      ...imagePromises,
+      document.fonts ? document.fonts.ready : Promise.resolve()
+    ]).then(() => {
+      // Tout est prêt : cacher le loader, montrer le contenu
+      const loader = document.getElementById("loader");
+      const content = document.getElementById("content");
+
+      loader.style.opacity = 0;
+      setTimeout(() => {
+        loader.style.display = "none";
+        content.style.display = "block";
+        content.style.opacity = 1;
+      }, 300); // attends que la transition se fasse
+    });
+  });
 
 
 // fonction pour créer une vidéo et l'ajouter + observer
