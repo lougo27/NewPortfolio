@@ -97,13 +97,14 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-window.addEventListener('load', () => {
+document.addEventListener('DOMContentLoaded', () => {
   document.getElementById("loader").style.display = "none";
   document.getElementById("content").style.display = "block";
 
   // initialisation de l'observer sur les vidéos déjà présentes
   //initVideoObserver();
 });
+
 
 // fonction pour créer une vidéo et l'ajouter + observer
 function createVideo(project, card) {
